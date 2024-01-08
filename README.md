@@ -1,1 +1,1 @@
-# trusted-advisor-ipi-install
+# Trusted Advisor Video - scripts
