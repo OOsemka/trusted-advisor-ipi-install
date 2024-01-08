@@ -1,0 +1,22 @@
+   export PROV_CONN="eth1"
+   sudo nmcli con down "$PROV_CONN"
+   sudo nmcli con delete "$PROV_CONN"
+   sudo nmcli con down "System $PROV_CONN"
+   sudo nmcli con delete "System $PROV_CONN"
+   sudo nmcli connection add ifname provisioning type bridge con-name provisioning
+   sudo nmcli con add type bridge-slave ifname "$PROV_CONN" master provisioning
+   sudo nmcli connection modify provisioning ipv4.addresses 10.10.0.10/24 ipv4.method manual
+   sudo nmcli con down provisioning
+   sudo nmcli con up provisioning
+   
+   
+   export BM_CONN="eth2"
+   sudo nmcli con down "$BM_CONN"
+   sudo nmcli con delete "$BM_CONN"
+   sudo nmcli con down "System $BM_CONN"
+   sudo nmcli con delete "System $BM_CONN"
+   sudo nmcli connection add ifname baremetal type bridge con-name baremetal
+   sudo nmcli con add type bridge-slave ifname "$BM_CONN" master baremetal
+   sudo nmcli connection modify baremetal ipv4.addresses 10.20.0.10/24 ipv4.method manual
+   sudo nmcli con down baremetal
+   sudo nmcli con up baremetal
